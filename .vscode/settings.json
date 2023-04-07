@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.ejs": "vue-html",
+        "new": "cpp",
+        "iostream": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "array": "cpp"
+    }
+}
