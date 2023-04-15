@@ -116,10 +116,10 @@ with st.container():
     apiCController.run()
     listEdges = apiCController.read()
 
-    singleUsers = df.query("`role` == '{0}'".format(nameRoleUser)).loc[:, [
-        'id', 'time', 'role', 'name_re', 'birth_re', 'nicework_re', 'profile_re', 'teamRequest_re', 'sdt_re', 'email_re', 'facebook_re']]
-    teams = df.query("`role` == '{0}'".format(nameRoleTeam)).loc[:, ['id', 'time', 'role', 'nameLeader', 'sdtLeader', 'emailLeader', 'facebookLeader', 'typeProject',
-                                                                     'infoMemberStruct', 'shortIdea', 'statusProject', 'numberMember', 'numberRequestAddin', 'profileRequest', 'request01', 'request02', 'request03', 'request04']]
+    singleUsers = df.query("`role` == '{0}'".format(
+        nameRoleUser)).loc[:, listTypeSingle]
+    teams = df.query("`role` == '{0}'".format(
+        nameRoleTeam)).loc[:, listTypeTeam]
 
     backupStatus = mStatus._data
 
