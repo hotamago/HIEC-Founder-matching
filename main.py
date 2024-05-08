@@ -59,11 +59,9 @@ def makeEmptyStatus():
 
     # Function check if user is hust
     def checkHust(s):
-        if checkExitStringInString(s, [
+        return countExitStringInString(s, [
             "HUST", "hanoi university of science and technology", "Bách Khoa Hà Nội"
-        ]):
-            return 1
-        return 0
+        ])
 
     # Build list
     for i in dfDict:

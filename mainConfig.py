@@ -84,12 +84,11 @@ def goodString2Cmp(s):
     return sLow
                                       
 # Check if any string in list is in another string
-def checkExitStringInString(smain, listSub):
+def countExitStringInString(smain, listSub):
+    cnt = 0
     for i in listSub:
-        # check if i is in smain
-        if goodString2Cmp(i) in goodString2Cmp(smain):
-            return True
-    return False
+        cnt += goodString2Cmp(smain).count(goodString2Cmp(i))
+    return cnt
 
 # Compare function
 def default_caculate_match(a, b, isHustInTeam, isUserAreHust):
