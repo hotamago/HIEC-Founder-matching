@@ -60,7 +60,10 @@ vaildTypeRule = {
     "userAreHust": "int",
 }
 def checkJSONVaildType(jsonData):
-    for i in jsonData.keys():
+    for iraw in jsonData.keys():
+        i = iN2Id.get(iraw, None)
+        if i is None:
+            continue
         if vaildTypeRule.get(i, None) is not None:
             if vaildTypeRule[i] == "int":
                 try:

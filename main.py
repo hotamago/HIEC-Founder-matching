@@ -61,6 +61,7 @@ def autoVaildNewFile():
         csvData.resetFile()
         df = csvData.read(namesCol).to_json(orient='records')
         dfDict = json.loads(df)
+        st.write("File list.csv is have error, reset file to default. Error: {0}".format(e))
         raise ValueError("File list.csv is have error, reset file to default. Error: {0}".format(e))
 
 def makeEmptyStatus():
