@@ -111,7 +111,7 @@ modeUI = "Matching"
 # UI slider
 with st.sidebar:
     # Rebuild data
-    if st.button('Rebuild'):
+    if st.button('Cập nhật các matching và tìm matching mới'):
         svOp = mStatus._data['svOption']
         for x in svOp:
             edge = list(map(str, x.split(',')))
