@@ -49,8 +49,19 @@ with st.spinner('Load model 0...'):
     apiCController, csvData = load_model_0()
 
 def makeEmptyStatus():
-    df = csvData.read(namesCol).to_json(orient='records')
-    dfDict = json.loads(df)
+    try:
+        df = csvData.read(namesCol).to_json(orient='records')
+        dfDict = json.loads(df)
+
+        # Check vaild type data rule
+        for i in dfDict:
+            if not checkJSONVaildType(i):
+                raise ValueError("File list.csv is not vaild type data rule")
+    except Exception as e:
+        csvData.resetFile()
+        df = csvData.read(namesCol).to_json(orient='records')
+        dfDict = json.loads(df)
+        raise ValueError("File list.csv is have error, reset file to default. Error: {0}".format(e))
 
     cntMemTeam = {}
     cntTryUser = {}

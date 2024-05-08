@@ -20,3 +20,7 @@ class CsvData():
         df = df.fillna(value=valueNan)
 
         return df
+    def resetFile(self):
+        with open("list_example.csv", "rb") as in_file, open("list.csv", "wb") as out_file:
+            out_file.write(in_file.read()) 
+        return True

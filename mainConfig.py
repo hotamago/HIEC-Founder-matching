@@ -50,6 +50,28 @@ iN2Id = {
     "userAreHust": -6,
 }
 
+# Check vaild type data rule
+vaildTypeRule = {
+    "time": "str",
+    "role": "str",
+    "numMemCur": "int",
+    "numMemWant": "int",
+    "hustInTeam": "int",
+    "userAreHust": "int",
+}
+def checkJSONVaildType(jsonData):
+    for i in jsonData.keys():
+        if vaildTypeRule.get(i, None) is not None:
+            if vaildTypeRule[i] == "int":
+                try:
+                    int(jsonData[i])
+                except:
+                    return False
+            elif vaildTypeRule[i] == "str":
+                if type(jsonData[i]) != str:
+                    return False
+    return True
+
 # Split data
 listTypeSingle = [*namesCol[:2], *namesCol[-11:]]
 listTypeTeam = [*namesCol[:-11]]
