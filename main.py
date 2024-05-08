@@ -199,6 +199,11 @@ with st.sidebar:
         st.markdown('- Các cạnh mà 1 trong 2 node đã bị xóa.')
         st.markdown('- Các cạnh mà team chưa có thành viên là HUST và user không phải là HUST (Tức bắt buộc phải đảm bảo team có HUST hoặc cạnh có user là HUST còn nếu không thì không cho matching với bất kỳ ai khác, tránh việc team sau khi matching thì lại không có HUST để match không đủ điều kiện tham gia và gây lãng phí tài nguyên).')
 
+    with st.expander("Copyright"):
+        st.markdown('- Developed by HotaMago')
+        st.markdown('- Facebook Author: [HotaMago](https://www.facebook.com/hotamago)')
+        st.markdown('- The project was built for HIEC club and Techstart event.')
+
     st.divider()
 
     # Select mode
