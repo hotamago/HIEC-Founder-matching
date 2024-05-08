@@ -117,7 +117,7 @@ def default_caculate_match(a, b, isHustInTeam, isUserAreHust):
             pointValue += 1
 
     
-    if not isHustInTeam and isUserAreHust:
+    if isHustInTeam <= 0 and isUserAreHust >= 1:
         pointValue += 4
 
     return pointValue

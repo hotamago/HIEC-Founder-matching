@@ -66,18 +66,15 @@ class ApiCController():
 
         # Filler
         self.res = []
+        self.badRes = []
         # Copy of cntMemTeam and cntTryUser
         cntMemTeam = self.cntMemTeam.copy()
         cntTryUser = self.cntTryUser.copy()
-        for edge in edges:
-            # Check if team or user is full
-            if cntMemTeam[edge[0]] >= maxOfMemberPerTeam or cntTryUser[edge[1]] >= maxOfTeamPerUsers:
-                continue
-            # Check if team or user one of them is hust
-            if (not self.isHustInTeam[edge[0]]) and (not self.isUserAreHust[edge[1]]):
-                continue
-            # Add edge
-            self.res.append({
+        # Map bool is user is match
+        mapUserIsMatch = dict()
+
+        def makeResEdge(edge):
+            return {
                 "edge": edge,
                 "point": default_caculate_match(
                     self.df[int(edge[0])],
@@ -87,10 +84,29 @@ class ApiCController():
                 ),
                 "isHustInTeam": self.isHustInTeam[edge[0]],
                 "isUserAreHust": self.isUserAreHust[edge[1]]
-            })
+            }
+
+        # Add edge to res
+        for edge in edges:
+            # Check if team or user is full
+            if cntMemTeam[edge[0]] >= maxOfMemberPerTeam or cntTryUser[edge[1]] >= maxOfTeamPerUsers:
+                self.badRes.append(makeResEdge(edge))
+                continue
+            # Check if team or user one of them is hust
+            if (self.isHustInTeam[edge[0]] <= 0) and (self.isUserAreHust[edge[1]] <= 0):
+                self.badRes.append(makeResEdge(edge))
+                continue
+            # Check if user is already match
+            if mapUserIsMatch.get(edge[1], False):
+                self.badRes.append(makeResEdge(edge))
+                continue
+            # Add edge
+            self.res.append(makeResEdge(edge))
             # Increase cntMemTeam and cntTryUser
             cntMemTeam[edge[0]] += 1
             cntTryUser[edge[1]] += 1
+            # Update mapUserIsMatch
+            mapUserIsMatch[edge[1]] = True
 
     def read(self):
         return self.res
