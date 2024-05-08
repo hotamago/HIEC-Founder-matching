@@ -56,7 +56,7 @@ listTypeSingle = [*namesCol[:3], *namesCol[-11:]]
 listTypeTeam = [*namesCol[:-11]]
 
 # Split data for cv
-listTypeSingleCV = [*namesCol[:3], *namesCol[-11:-13], *namesCol[-6:]]
+listTypeSingleCV = [*namesCol[:3], *namesCol[-11:-9], *namesCol[-6:]]
 listTypeTeamCV = [*namesCol[:3], *namesCol[6:-11]]
 
 
