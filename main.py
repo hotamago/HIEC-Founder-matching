@@ -209,7 +209,7 @@ with st.sidebar:
     # Select mode
     modeUI = st.radio(
         "Chọn mode",
-        ('Matching', 'Result', 'Table', 'Team non HUST', 'Bad matching', 'Cache status'))
+        ('Matching', 'Final match', 'Deleted match', 'Table', 'Team non HUST', 'Bad matching', 'Cache status'))
     
     st.divider()
 
@@ -361,8 +361,25 @@ with st.container():
 
             matchingInteractive(edge, pointEdge, isHustInTeam, isUserAreHust)
 
-    elif modeUI == "Result":
+    elif modeUI == "Final match":
         listEdges = mStatus.get_value("resultEdges")
+
+        for edge in listEdges:
+            pointEdge = default_caculate_match(
+                df[int(edge[0])], df[int(edge[1])],
+                mStatus._data["isHustInTeam"][edge[0]], mStatus._data["isUserAreHust"][edge[1]]
+            )
+            isHustInTeam = mStatus._data["isHustInTeam"][edge[0]]
+            isUserAreHust = mStatus._data["isUserAreHust"][edge[1]]
+
+            # st.write(edge)
+            if (edge[0] not in teamList) or (edge[1] not in singleUsersList):
+                continue
+
+            matchingInteractive(edge, pointEdge, isHustInTeam, isUserAreHust)
+
+    elif modeUI == "Deleted match":
+        listEdges = mStatus.get_value("edegesDel")
 
         for edge in listEdges:
             pointEdge = default_caculate_match(
