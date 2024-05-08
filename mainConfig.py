@@ -38,6 +38,7 @@ Mô tả các kỹ năng mà bạn thông thạo nhất
 3 lĩnh vực của đội thi mà bạn mong muốn được ghép cặp
 Trình bày ý tưởng mà bản thân đang ấp ủ. Nếu không có, điền N/A
 """
+namesCol = namesCol.split("\n")[1:-1]
 
 # Alice name to index
 iN2Id = {
@@ -49,15 +50,13 @@ iN2Id = {
     "userAreHust": -6,
 }
 
-namesCol = namesCol.split("\n")[1:-1]
-
 # Split data
-listTypeSingle = [*namesCol[:3], *namesCol[-11:]]
+listTypeSingle = [*namesCol[:2], *namesCol[-11:]]
 listTypeTeam = [*namesCol[:-11]]
 
 # Split data for cv
-listTypeSingleCV = [*namesCol[:3], *namesCol[-11:-9], *namesCol[-6:]]
-listTypeTeamCV = [*namesCol[:3], *namesCol[6:-11]]
+listTypeSingleCV = [*namesCol[-11:-9], *namesCol[-6:]]
+listTypeTeamCV = [*namesCol[2:3], *namesCol[6:-11]]
 
 
 # Helper function
