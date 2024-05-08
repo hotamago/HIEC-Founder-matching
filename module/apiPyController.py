@@ -19,8 +19,8 @@ class ApiCController():
         self.isUserAreHust = isUserAreHust
 
     def run(self):
-        singleUsersList = [str(i["id"]) for i in self.df if i[namesCol[1]] == nameRoleUser]
-        teamList = [str(i["id"]) for i in self.df if i[namesCol[1]] == nameRoleTeam]
+        singleUsersList = [str(i["id"]) for i in self.df if i[namesCol[iN2Id["role"]]] == nameRoleUser]
+        teamList = [str(i["id"]) for i in self.df if i[namesCol[iN2Id["role"]]] == nameRoleTeam]
 
         # Prepare data
         edges = []
@@ -43,10 +43,10 @@ class ApiCController():
             eb_1 = self.df[int(eb[1])]
 
             # Sort by time of register
-            timeA_0 = convertStr2Unix(ea_0[namesCol[0]])
-            timeA_1 = convertStr2Unix(ea_1[namesCol[0]])
-            timeB_0 = convertStr2Unix(eb_0[namesCol[0]])
-            timeB_1 = convertStr2Unix(eb_1[namesCol[0]])
+            timeA_0 = convertStr2Unix(ea_0[namesCol[iN2Id["time"]]])
+            timeA_1 = convertStr2Unix(ea_1[namesCol[iN2Id["time"]]])
+            timeB_0 = convertStr2Unix(eb_0[namesCol[iN2Id["time"]]])
+            timeB_1 = convertStr2Unix(eb_1[namesCol[iN2Id["time"]]])
 
             # calculate point
             pointValueA = default_caculate_match(ea_0, ea_1, self.isHustInTeam[ea[0]], self.isUserAreHust[ea[1]])

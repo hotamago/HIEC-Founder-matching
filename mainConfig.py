@@ -39,10 +39,26 @@ Mô tả các kỹ năng mà bạn thông thạo nhất
 Trình bày ý tưởng mà bản thân đang ấp ủ. Nếu không có, điền N/A
 """
 
+# Alice name to index
+iN2Id = {
+    "time": 0,
+    "role": 1,
+    "numMemCur": 10,
+    "numMemWant": 13,
+    "hustInTeam": 7,
+    "userAreHust": -6,
+}
+
 namesCol = namesCol.split("\n")[1:-1]
 
+# Split data
 listTypeSingle = [*namesCol[:3], *namesCol[-11:]]
 listTypeTeam = [*namesCol[:-11]]
+
+# Split data for cv
+listTypeSingleCV = [*namesCol[:3], *namesCol[-11:-13], *namesCol[-6:]]
+listTypeTeamCV = [*namesCol[:3], *namesCol[6:-11]]
+
 
 # Helper function
 # Function to lower case, remove space and remove special character, remove accent, replace vietnamese character to english character

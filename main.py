@@ -65,13 +65,13 @@ def makeEmptyStatus():
 
     # Build list
     for i in dfDict:
-        if i[namesCol[1]] == nameRoleTeam:
-            cntMemTeam[i["id"]] = max(int(i[namesCol[10]]), maxOfMemberPerTeam - int(i[namesCol[13]]))
-            isHustInTeam[i["id"]] = checkHust(i[namesCol[7]])
+        if i[namesCol[iN2Id["role"]]] == nameRoleTeam:
+            cntMemTeam[i["id"]] = max(int(i[namesCol[iN2Id["numMemCur"]]]), maxOfMemberPerTeam - int(i[namesCol[iN2Id["numMemWant"]]]))
+            isHustInTeam[i["id"]] = checkHust(i[namesCol[iN2Id["hustInTeam"]]])
 
-        if i[namesCol[1]] == nameRoleUser:
+        if i[namesCol[iN2Id["role"]]] == nameRoleUser:
             cntTryUser[i["id"]] = 0
-            isUserAreHust[i["id"]] = checkHust(i[namesCol[-6]])
+            isUserAreHust[i["id"]] = checkHust(i[namesCol[iN2Id["userAreHust"]]])
 
     return {
         "df": df,
@@ -181,16 +181,27 @@ with st.container():
     singleUsers = {
         str(i["id"]): {
             k: i[k] for k in i if k in listTypeSingle
-        } for i in df if i[namesCol[1]] == nameRoleUser
+        } for i in df if i[namesCol[iN2Id["role"]]] == nameRoleUser
     }
     teams = {
         str(i["id"]): {
             k: i[k] for k in i if k in listTypeTeam
-        } for i in df if i[namesCol[1]] == nameRoleTeam
+        } for i in df if i[namesCol[iN2Id["role"]]] == nameRoleTeam
+    }
+    # Split data to team and single user with delete info data
+    singleUsersCV = {
+        str(i["id"]): {
+            k: i[k] for k in i if k in listTypeSingleCV
+        } for i in df if i[namesCol[iN2Id["role"]]] == nameRoleUser
+    }
+    teamsCV = {
+        str(i["id"]): {
+            k: i[k] for k in i if k in listTypeTeamCV
+        } for i in df if i[namesCol[iN2Id["role"]]] == nameRoleTeam
     }
     # index data
-    singleUsersList = [str(i["id"]) for i in df if i[namesCol[1]] == nameRoleUser]
-    teamList = [str(i["id"]) for i in df if i[namesCol[1]] == nameRoleTeam]
+    singleUsersList = [str(i["id"]) for i in df if i[namesCol[iN2Id["role"]]] == nameRoleUser]
+    teamList = [str(i["id"]) for i in df if i[namesCol[iN2Id["role"]]] == nameRoleTeam]
 
     backupStatus = mStatus._data
 
@@ -252,7 +263,7 @@ with st.container():
                     mStatus._data['svOption'][edgeStr] = option
                     mStatus._set()
 
-                    cvDict = teams[edge[0]]
+                    cvDict = teamsCV[edge[0]]
                     strCvTeam = ""
                     for x in cvDict:
                         strCvTeam += "{0}: {1}\n".format(x, cvDict[x])
@@ -265,7 +276,7 @@ with st.container():
                         key=edgeStr + "_cvteam",
                     )
 
-                    cvDict = singleUsers[edge[1]]
+                    cvDict = singleUsersCV[edge[1]]
                     strCvPer = ""
                     for x in cvDict:
                         strCvPer += "{0}: {1}\n".format(x, cvDict[x])
@@ -308,7 +319,7 @@ with st.container():
                         indexOx = idOp[svOp[edgeStr]]
                     option = st.selectbox('Select', idOp.keys(), index=indexOx, key=edgeStr, disabled=True)
 
-                    cvDict = teams[edge[0]]
+                    cvDict = teamsCV[edge[0]]
                     strCvTeam = ""
                     for x in cvDict:
                         strCvTeam += "{0}: {1}\n".format(x, cvDict[x])
@@ -321,7 +332,7 @@ with st.container():
                         key=edgeStr + "_cvteam",
                     )
 
-                    cvDict = singleUsers[edge[1]]
+                    cvDict = singleUsersCV[edge[1]]
                     strCvPer = ""
                     for x in cvDict:
                         strCvPer += "{0}: {1}\n".format(x, cvDict[x])
