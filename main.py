@@ -153,13 +153,11 @@ with st.sidebar:
         st.markdown('Trạng thái "Error" dùng cho các cạnh lỗi logic hoặc sự cố hi hữu, matching trạng thái sẽ này sẽ bị xóa khỏi danh sách matching nhưng không làm thay đổi bất kỳ trạng thái hay thông tin nào khác.')
 
     with st.expander("Which matching not show"):
-        st.markdown('''
-        Các matching không hiện:
-                    - Các cạnh đã được đặt trạng thái "Match" hoặc "Not match".
-                    - Các cạnh đã được đặt trạng thái "Error".
-                    - Các cạnh mà số cạnh đã hiện đủ số lần thử hoặc đã đủ số thành viên trong team.
-                    - Các cạnh mà 1 trong 2 node đã bị xóa.
-                    - Các cạnh mà team chưa có thành viên là HUST và user không phải là HUST (Tức bắt buộc phải đảm bảo team có HUST hoặc cạnh có user là HUST còn nếu không thì không cho matching với bất kỳ ai khác, tránh việc team sau khi matching thì lại không có HUST để match không đủ điều kiện tham gia và gây lãng phí tài nguyên).''')
+        st.markdown('- Các cạnh đã được đặt trạng thái "Match" hoặc "Not match".')
+        st.markdown('- Các cạnh đã được đặt trạng thái "Error".')
+        st.markdown('- Các cạnh mà số cạnh đã hiện đủ số lần thử hoặc đã đủ số thành viên trong team.')
+        st.markdown('- Các cạnh mà 1 trong 2 node đã bị xóa.')
+        st.markdown('- Các cạnh mà team chưa có thành viên là HUST và user không phải là HUST (Tức bắt buộc phải đảm bảo team có HUST hoặc cạnh có user là HUST còn nếu không thì không cho matching với bất kỳ ai khác, tránh việc team sau khi matching thì lại không có HUST để match không đủ điều kiện tham gia và gây lãng phí tài nguyên).')
 
     st.divider()
 
