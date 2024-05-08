@@ -152,12 +152,21 @@ with st.sidebar:
         st.markdown('Trạng thái "Not Match" sẽ tăng số lần thử của user lên 1 đơn vị (số lần user được thử mathcing là 3).')
         st.markdown('Trạng thái "Error" dùng cho các cạnh lỗi logic hoặc sự cố hi hữu, matching trạng thái sẽ này sẽ bị xóa khỏi danh sách matching nhưng không làm thay đổi bất kỳ trạng thái hay thông tin nào khác.')
 
+    with st.expander("Which matching not show"):
+        st.markdown('''
+        Các matching không hiện:
+                    - Các cạnh đã được đặt trạng thái "Match" hoặc "Not match".
+                    - Các cạnh đã được đặt trạng thái "Error".
+                    - Các cạnh mà số cạnh đã hiện đủ số lần thử hoặc đã đủ số thành viên trong team.
+                    - Các cạnh mà 1 trong 2 node đã bị xóa.
+                    - Các cạnh mà team chưa có thành viên là HUST và user không phải là HUST (Tức bắt buộc phải đảm bảo team có HUST hoặc cạnh có user là HUST còn nếu không thì không cho matching với bất kỳ ai khác, tránh việc team sau khi matching thì lại không có HUST để match không đủ điều kiện tham gia và gây lãng phí tài nguyên).''')
+
     st.divider()
 
     # Select mode
     modeUI = st.radio(
         "Chọn mode",
-        ('Matching', 'Result', 'Table'))
+        ('Matching', 'Result', 'Table', 'Team non HUST'))
     
     st.divider()
 
@@ -303,7 +312,7 @@ with st.container():
                         mime='text',
                         key=edgeStr + "_cvpersonal",
                     )
-                st.markdown("""---""")
+                st.divider()
 
     elif modeUI == "Result":
         listEdges = mStatus.get_value("edegesDel")
@@ -359,7 +368,30 @@ with st.container():
                         mime='text',
                         key=edgeStr + "_cvpersonal",
                     )
-                st.markdown("""---""")
+                st.divider()
 
     elif modeUI == "Table":
         st.write(pd.read_json(StringIO(json.dumps(df))))
+
+    elif modeUI == "Team non HUST":
+        for i in teamList:
+            if not mStatus._data["isHustInTeam"][i]:
+                with st.container():
+                    col1, col2 = st.columns([6, 1])
+                    with col1:
+                        st.dataframe(teams[i], width=600, height=200)
+                    with col2:
+                        cvDict = teamsCV[i]
+                        strCvTeam = ""
+                        for x in cvDict:
+                            strCvTeam += "{0}: {1}\n".format(x, cvDict[x])
+
+                        st.download_button(
+                            label="CV Teams",
+                            data=strCvTeam,
+                            file_name='cvTeams_{0}.txt'.format(i),
+                            mime='text',
+                            key=i + "_cvteam",
+                        )
+
+                    st.divider()
