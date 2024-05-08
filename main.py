@@ -144,12 +144,12 @@ with st.sidebar:
         st.rerun()
 
     with st.expander("See tutorial"):
-        st.text('Sau khi đã đặt trạng thái ("match", "not match", "Error") cho 1 hoặc nhiều cạnh, nhấn "Update and find new" để cập nhật dữ liệu matching và tìm matching mới nếu có.')
-        st.text('Một số matching không hiện vì đã có đủ matching cho team hoặc user đó. Và cần phải đặt trạng thái cho các matching đang hiện trước khi tìm matching mới.')
-        st.text('Lưu ý: Một khi đã ấn "Update and find new" thì các mathcing đã đặt trạng thái sẽ không thể thay đổi và sẽ hiện ở mục menu "Result".')
-        st.text('Trạng thái "Unknow" sẽ không thay đổi khi nhấn "Update and find new". Và cạnh đấy sẽ tiếp tục hiện ở lần tìm matching tiếp theo.')
-        st.text('Trạng thái "Match" sẽ tăng số lượng thành viên trong team và số lần thử của user lên 1 đơn vị (hiện tại số team tối đa là 6, số lần user được thử mathcing là 3) và cập nhật trạng thái "isHustInTeam" của team.')
-        st.text('Trạng thái "Error" dùng cho các cạnh lỗi logic hoặc sự cố hi hữu, matching trạng thái sẽ này sẽ bị xóa khỏi danh sách matching nhưng không làm thay đổi bất kỳ trạng thái hay thông tin nào khác.')
+        st.markdown('Sau khi đã đặt trạng thái ("match", "not match", "Error") cho 1 hoặc nhiều cạnh, nhấn "Update and find new" để cập nhật dữ liệu matching và tìm matching mới nếu có.')
+        st.markdown('Một số matching không hiện vì đã có đủ matching cho team hoặc user đó. Và cần phải đặt trạng thái cho các matching đang hiện trước khi tìm matching mới.')
+        st.markdown('Lưu ý: Một khi đã ấn "Update and find new" thì các mathcing đã đặt trạng thái sẽ không thể thay đổi và sẽ hiện ở mục menu "Result".')
+        st.markdown('Trạng thái "Unknow" sẽ không thay đổi khi nhấn "Update and find new". Và cạnh đấy sẽ tiếp tục hiện ở lần tìm matching tiếp theo.')
+        st.markdown('Trạng thái "Match" sẽ tăng số lượng thành viên trong team và số lần thử của user lên 1 đơn vị (hiện tại số team tối đa là 6, số lần user được thử mathcing là 3) và cập nhật trạng thái "isHustInTeam" của team.')
+        st.markdown('Trạng thái "Error" dùng cho các cạnh lỗi logic hoặc sự cố hi hữu, matching trạng thái sẽ này sẽ bị xóa khỏi danh sách matching nhưng không làm thay đổi bất kỳ trạng thái hay thông tin nào khác.')
 
     st.divider()
 
