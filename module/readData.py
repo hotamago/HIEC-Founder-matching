@@ -10,9 +10,8 @@ class CsvData():
         # check if list.csv is exist
         if not os.path.exists('list.csv'):
             # create list.csv by list_example.csv
-            with open('list_example.csv', 'r') as f:
-                with open('list.csv', 'w') as f2:
-                    f2.write(f.read())     
+            with open("list_example.csv", "rb") as in_file, open("list.csv", "wb") as out_file:
+                out_file.write(in_file.read()) 
 
         # read list.csv
         df = pd.read_csv('list.csv', header=0, names=list(names), dtype=str)
