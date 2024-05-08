@@ -148,7 +148,8 @@ with st.sidebar:
         st.markdown('Một số matching không hiện vì đã có đủ matching cho team hoặc user đó. Và cần phải đặt trạng thái cho các matching đang hiện trước khi tìm matching mới.')
         st.markdown('Lưu ý: Một khi đã ấn "Update and find new" thì các mathcing đã đặt trạng thái sẽ không thể thay đổi và sẽ hiện ở mục menu "Result".')
         st.markdown('Trạng thái "Unknow" sẽ không thay đổi khi nhấn "Update and find new". Và cạnh đấy sẽ tiếp tục hiện ở lần tìm matching tiếp theo.')
-        st.markdown('Trạng thái "Match" sẽ tăng số lượng thành viên trong team và số lần thử của user lên 1 đơn vị (hiện tại số team tối đa là 6, số lần user được thử mathcing là 3) và cập nhật trạng thái "isHustInTeam" của team.')
+        st.markdown('Trạng thái "Match" sẽ tăng số lượng thành viên trong team lên 1 đơn vị (hiện tại số thành viên team tối đa là 6), đặt trạng thái cho user là đã có team và cập nhật trạng thái "isHustInTeam" của team.')
+        st.markdown('Trạng thái "Not Match" sẽ tăng số lần thử của user lên 1 đơn vị (số lần user được thử mathcing là 3).')
         st.markdown('Trạng thái "Error" dùng cho các cạnh lỗi logic hoặc sự cố hi hữu, matching trạng thái sẽ này sẽ bị xóa khỏi danh sách matching nhưng không làm thay đổi bất kỳ trạng thái hay thông tin nào khác.')
 
     st.divider()
