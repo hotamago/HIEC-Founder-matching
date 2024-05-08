@@ -111,7 +111,7 @@ modeUI = "Matching"
 # UI slider
 with st.sidebar:
     # Rebuild data
-    if st.button('Cập nhật các matching và tìm matching mới'):
+    if st.button('Update and find new'):
         svOp = mStatus._data['svOption']
         for x in svOp:
             edge = list(map(str, x.split(',')))
@@ -143,6 +143,23 @@ with st.sidebar:
         write_df(df)
         st.rerun()
 
+    with st.expander("See tutorial"):
+        st.text('Sau khi đã đặt trạng thái ("match", "not match", "Error") cho 1 hoặc nhiều cạnh, nhấn "Update and find new" để cập nhật dữ liệu matching và tìm matching mới nếu có.')
+        st.text('Một số matching không hiện vì đã có đủ matching cho team hoặc user đó. Và cần phải đặt trạng thái cho các matching đang hiện trước khi tìm matching mới.')
+        st.text('Lưu ý: Một khi đã ấn "Update and find new" thì các mathcing đã đặt trạng thái sẽ không thể thay đổi và sẽ hiện ở mục menu "Result".')
+        st.text('Trạng thái "Unknow" sẽ không thay đổi khi nhấn "Update and find new". Và cạnh đấy sẽ tiếp tục hiện ở lần tìm matching tiếp theo.')
+        st.text('Trạng thái "Match" sẽ tăng số lượng thành viên trong team và số lần thử của user lên 1 đơn vị (hiện tại số team tối đa là 6, số lần user được thử mathcing là 3) và cập nhật trạng thái "isHustInTeam" của team.')
+        st.text('Trạng thái "Error" dùng cho các cạnh lỗi logic hoặc sự cố hi hữu, matching trạng thái sẽ này sẽ bị xóa khỏi danh sách matching nhưng không làm thay đổi bất kỳ trạng thái hay thông tin nào khác.')
+
+    st.divider()
+
+    # Select mode
+    modeUI = st.radio(
+        "Chọn mode",
+        ('Matching', 'Result', 'Table'))
+    
+    st.divider()
+
     # Upload file
     with st.form("my-form", clear_on_submit=True):
         uploaded_file = st.file_uploader("Choose a csv file", type='csv')
@@ -160,17 +177,14 @@ with st.sidebar:
             mStatus._set()
             st.rerun()
 
+    st.divider()
+
     # Clear cache
     if st.button('Clear all cache'):
         st.cache_resource.clear()
         mStatus._data = makeEmptyStatus()
         mStatus._set()
         st.rerun()
-
-    # Select mode
-    modeUI = st.radio(
-        "Chọn mode",
-        ('Matching', 'Result', 'Table'))
 
 # st.write(mStatus.get_value("nodesDel"))
 # st.write(mStatus.get_value("edegesDel"))
