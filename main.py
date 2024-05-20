@@ -64,6 +64,12 @@ def autoVaildNewFile():
         st.write("File list.csv is have error, reset file to default. Error: {0}".format(e))
         raise ValueError("File list.csv is have error, reset file to default. Error: {0}".format(e))
 
+# Function check if user is hust
+def checkHust(s):
+    return countExitStringInString(s, [
+        "HUST", "hanoi university of science and technology", "Bách Khoa Hà Nội"
+    ])
+
 def makeEmptyStatus():
     try:
         df = csvData.read(namesCol).to_json(orient='records')
@@ -83,12 +89,6 @@ def makeEmptyStatus():
     cntTryUser = {}
     isHustInTeam = {}
     isUserAreHust = {}
-
-    # Function check if user is hust
-    def checkHust(s):
-        return countExitStringInString(s, [
-            "HUST", "hanoi university of science and technology", "Bách Khoa Hà Nội"
-        ])
 
     # Build list
     for i in dfDict:
@@ -112,6 +112,36 @@ def makeEmptyStatus():
         "svOption": dict(),
         "svOptionPrev": dict(),
     }
+
+def update_account_status(mStatus):
+    cntMemTeam = mStatus._data['cntMemTeam']
+    cntTryUser = mStatus._data['cntTryUser']
+    isHustInTeam = mStatus._data['isHustInTeam']
+    isUserAreHust = mStatus._data['isUserAreHust']
+
+    dfDict = json.loads(mStatus.get_value("df"))
+
+    # Build list
+    for i in dfDict:
+        if i[namesCol[iN2Id["role"]]] == nameRoleTeam:
+            if i["id"] not in cntMemTeam:
+                cntMemTeam[i["id"]] = max(int(i[namesCol[iN2Id["numMemCur"]]]), maxOfMemberPerTeam - int(i[namesCol[iN2Id["numMemWant"]]]))
+            if i["id"] not in isHustInTeam:
+                isHustInTeam[i["id"]] = checkHust(i[namesCol[iN2Id["hustInTeam"]]])
+
+        if i[namesCol[iN2Id["role"]]] == nameRoleUser:
+            if i["id"] not in cntTryUser:
+                cntTryUser[i["id"]] = 0
+            if i["id"] not in isUserAreHust:
+                isUserAreHust[i["id"]] = checkHust(i[namesCol[iN2Id["userAreHust"]]])
+    
+    # Update status
+    mStatus._data['cntMemTeam'] = cntMemTeam
+    mStatus._data['cntTryUser'] = cntTryUser
+    mStatus._data['isHustInTeam'] = isHustInTeam
+    mStatus._data['isUserAreHust'] = isUserAreHust
+
+    mStatus._set()
 
 with st.spinner('Load model 1...'):
     mStatus = MangerStatus(makeEmptyStatus())
@@ -258,6 +288,8 @@ with st.sidebar:
                 mStatus._set()
             except:
                 pass
+
+            update_account_status(mStatus)
 
             st.cache_resource.clear()
             st.rerun()
