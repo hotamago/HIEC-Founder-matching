@@ -1,5 +1,5 @@
 pandas
-streamlit=1.29.0
+streamlit==1.29.0
 matplotlib
 plotly
 numpy
