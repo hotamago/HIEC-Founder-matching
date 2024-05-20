@@ -156,6 +156,9 @@ def write_df(df):
 def addNodesDel(edge):
     if edge[1] not in mStatus._data['nodesDel']:
         mStatus._data['nodesDel'].append(edge[1])
+def addSingleNodeDel(node):
+    if node not in mStatus._data['nodesDel']:
+        mStatus._data['nodesDel'].append(node)
 def addEdgesDel(edge):
     if edge not in mStatus._data['edegesDel']:
         mStatus._data['edegesDel'].append(edge)
@@ -165,6 +168,9 @@ def addResultEdges(edge):
 def delNodesDel(edge):
     if edge[1] in mStatus._data['nodesDel']:
         mStatus._data['nodesDel'].remove(edge[1])
+def delSingleNodeDel(node):
+    if node in mStatus._data['nodesDel']:
+        mStatus._data['nodesDel'].remove(node)
 def delEdgesDel(edge):
     if edge in mStatus._data['edegesDel']:
         mStatus._data['edegesDel'].remove(edge)
@@ -266,7 +272,7 @@ with st.sidebar:
     # Select mode
     modeUI = st.radio(
         "Chọn mode",
-        ('Matching', 'Final match', 'Deleted match', 'Table', 'Team non HUST', 'Bad matching', 'Cache status'))
+        ('Matching', 'Final match', 'Deleted match', 'Table', 'List Node', 'Team non HUST', 'Bad matching', 'Cache status'))
     
     st.divider()
 
@@ -355,6 +361,7 @@ def matchingInteractive(edge, pointEdge, isHustInTeam, isUserAreHust):
 
 # UI main
 with st.container():
+    # Get all node
     # Split data to team and single user
     singleUsers = {
         str(i["id"]): {
@@ -461,6 +468,43 @@ with st.container():
 
     elif modeUI == "Table":
         st.write(pd.read_json(StringIO(json.dumps(df))))
+
+    elif modeUI == "List Node":
+        def nodeStatusCompoment(nameRow, index, key_prefix, dataFrame):
+            st.write(nameRow)
+            with st.container():
+                col1, col2 = st.columns([5, 2])
+                with col1:
+                    st.dataframe(dataFrame, width=600, height=200)
+
+                indexOx = 0
+                if index in mStatus._data["nodesDel"]:
+                    indexOx = 1
+                dictOp = {
+                    "Active": 0,
+                    "Delete": 1,
+                }
+                with col2:
+                    option = st.selectbox('Select', dictOp, index=indexOx, key="{0}_{1}".format(key_prefix, index))
+
+                # st.write("{0} - {1}".format(indexOx, dictOp[option]))
+
+                # Reverse status
+                if indexOx == 1:
+                    delSingleNodeDel(index)
+                
+                # Update status
+                if dictOp[option] == 1:
+                    addSingleNodeDel(index)
+
+                mStatus._set()
+            st.divider()
+
+        for i in teamList:
+            nodeStatusCompoment("Team {0}".format(i), i, "node_status_t_", teams[i])
+
+        for i in singleUsersList:
+            nodeStatusCompoment("Member {0}".format(i), i, "node_status_m_", singleUsers[i])
 
     elif modeUI == "Team non HUST":
         for i in teamList:
